@@ -1,0 +1,21 @@
+Name: core.rpc
+ListenOn: 0.0.0.0:9101
+
+DatabaseConf:
+  Protocol: mongodb
+  Credentials: "27017"
+
+RedisConf:
+  Host: 127.0.0.1:6379
+  Type: node
+  Pass: Pzq04196666
+
+Log:
+  ServiceName: coreRpcLogger
+  Mode: file
+  Path: /home/potatomine/code/logs/core/rpc
+  Encoding: json
+  Level: info
+  Compress: false
+  KeepDays: 7
+  StackCoolDownMillis: 100

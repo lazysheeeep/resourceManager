@@ -1,14 +1,14 @@
 # Custom configuration | 自定义配置
 # 项目名称
-SERVICE = kernel
+SERVICE = core
 # 项目格式化之后的名称
-SERVICE = kernel
+SERVICE = core
 # 项目名称全小写格式
-SERVICE_LOWER = kernel
+SERVICE_LOWER = core
 # 项目名称下划线格式
-SERVICE_SNAKE = kernel
+SERVICE_SNAKE = core
 # 项目名称短杠格式
-SERVICE_DASH = kernel
+SERVICE_DASH = core
 
 # git仓库当前版本号
 VERSION = $(shell git describe --tags --always)
@@ -93,8 +93,8 @@ gen-rpc-ent-logic:
 
 .PHONY: api
 api: # 运行api模块
-	go run ./api/kernel.go -f ./api/etc/kernel.yaml
+	go run ./api/core.go -f ./api/etc/core.yaml
 
 .PHONY: rpc
 rpc: # 运行rpc模块
-	go run ./rpc/kernel.go -f ./rpc/etc/kernel.yaml
+	go run ./rpc/core.go -f ./rpc/etc/core.yaml
