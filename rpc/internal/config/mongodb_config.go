@@ -1,6 +1,6 @@
 package config
 
-type DatabaseConf struct {
+type MongoDBConf struct {
 	Protocol    string
 	Credentials string
 }

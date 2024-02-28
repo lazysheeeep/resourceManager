@@ -17,7 +17,7 @@ type ServiceContext struct {
 func NewServiceContext(config config.Config) (*ServiceContext, error) {
 	//Use the SetServerAPIOptions() method to set the stable A
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
-	opts := options.Client().ApplyURI(config.DatabaseConf.Protocol + "://localhost:" + config.DatabaseConf.Credentials).SetServerAPIOptions(serverAPI)
+	opts := options.Client().ApplyURI(config.MongoDBConf.Protocol + "://localhost:" + config.MongoDBConf.Credentials).SetServerAPIOptions(serverAPI)
 
 	//Create a new client and connect to the server
 	dbClient, err := mongo.Connect(context.TODO(), opts)

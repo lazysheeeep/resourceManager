@@ -1,7 +1,7 @@
 Name: core.rpc
 ListenOn: 0.0.0.0:9101
 
-DatabaseConf:
+MongoDBConf:
   Protocol: mongodb
   Credentials: "27017"
 
