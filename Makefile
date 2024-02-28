@@ -82,7 +82,7 @@ gen-rpc: # 生成rpc代码
 # 模板：分页相关模板 设置可选字段模板
 .PHONY: gen-ent
 gen-ent: # 生成ent代码
-	go run -mod=mod entgo.io/ent/cmd/ent generate --template glob=".rpc/ent/template/*.tmpl" ./rpc/ent/schema --feature $(ENT_FEATURE)
+	go run -mod=mod entgo.io/ent/cmd/ent generate --template glob="./rpc/ent/template/*.tmpl" ./rpc/ent/schema --feature $(ENT_FEATURE)
 	@echo "Generate Ent files successfully"
 
 # 这里使用goctls,可以根据schema中的go文件一步到位,就不需要再生成proto文件然后make gen-rpc了

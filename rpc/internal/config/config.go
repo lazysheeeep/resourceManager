@@ -7,6 +7,7 @@ import (
 
 type Config struct {
 	zrpc.RpcServerConf
-	MongoDBConf MongoDBConf
-	RedisConf   redis.RedisConf
+	DatabaseConf DatabaseConf
+	MongoDBConf  MongoDBConf
+	RedisConf    redis.RedisConf
 }
