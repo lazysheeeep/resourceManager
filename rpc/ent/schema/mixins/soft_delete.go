@@ -8,9 +8,9 @@ import (
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/mixin"
 	"fmt"
-	gen "github.com/lazysheeeep/resourceManager/rpc/ent"
-	"github.com/lazysheeeep/resourceManager/rpc/ent/hook"
-	"github.com/lazysheeeep/resourceManager/rpc/ent/intercept"
+	gen "resourceManager/rpc/ent"
+	"resourceManager/rpc/ent/hook"
+	"resourceManager/rpc/ent/intercept"
 	"time"
 )
 

@@ -6,8 +6,8 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/redis"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"github.com/lazysheeeep/resourceManager/rpc/ent"
-	"github.com/lazysheeeep/resourceManager/rpc/internal/config"
+	"resourceManager/rpc/ent"
+	"resourceManager/rpc/internal/config"
 )
 
 type ServiceContext struct {
