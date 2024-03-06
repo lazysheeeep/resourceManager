@@ -7,7 +7,6 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/zeromicro/go-zero v1.6.2
 	go.mongodb.org/mongo-driver v1.14.0
-	github.com/lazysheeeep/resourceManager
 )
 
 require (
