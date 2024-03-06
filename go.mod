@@ -1,4 +1,4 @@
-module resourceManager
+module github.com/lazysheeeep/resourceManager
 
 go 1.21.5
 
