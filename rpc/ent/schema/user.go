@@ -7,7 +7,7 @@ import (
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	mixins2 "resourceManager/rpc/ent/schema/mixins"
+	mixins2 "github.com/lazysheeeep/resourceManager/rpc/ent/schema/mixins"
 )
 
 // User holds the schema definition for the Student entity.
