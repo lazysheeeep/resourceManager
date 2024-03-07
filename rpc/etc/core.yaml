@@ -5,12 +5,11 @@ DatabaseConf:
   Type: mysql
   Host: 127.0.0.1
   Port: 3306
-  DBName: resource_manger
+  DBName: resource_manager
   Username: resource-manger-admin
   Password: Pzq04196666!
   MaxOpenConn: 100
-  SSLMode: disable
-  CacheTime: 5
+  MaxIdleConn: 20
 
 MongoDBConf:
   Protocol: mongodb

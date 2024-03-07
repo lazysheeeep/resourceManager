@@ -2,19 +2,18 @@ package svc
 
 import (
 	"context"
-	"github.com/lazysheeeep/resourceManager/rpc/ent"
-	"github.com/lazysheeeep/resourceManager/rpc/internal/config"
-	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/redis"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"gorm.io/gorm"
+	"resourceManager/rpc/internal/config"
 )
 
 type ServiceContext struct {
-	Config  config.Config
-	DB      *ent.Client
-	Mongodb *mongo.Client
-	Redis   *redis.Redis
+	Config   config.Config
+	DbClient *gorm.DB
+	Mongodb  *mongo.Client
+	Redis    *redis.Redis
 }
 
 func NewServiceContext(config config.Config) (*ServiceContext, error) {
@@ -29,12 +28,14 @@ func NewServiceContext(config config.Config) (*ServiceContext, error) {
 	}
 
 	//Create a new mysqlClient and connect to the server
-	db := ent.NewClient(ent.Log(logx.Info), ent.Driver(config.DatabaseConf.NewNoCacheDriver()), ent.Debug())
+	connRead := config.DatabaseConf.DbToString()
+	connWrite := config.DatabaseConf.DbToString()
+	db := config.DatabaseConf.NewDbClient(connRead, connWrite)
 
 	return &ServiceContext{
-		Config:  config,
-		DB:      db,
-		Mongodb: mongoClient,
-		Redis:   redis.MustNewRedis(config.RedisConf),
+		Config:   config,
+		DbClient: db,
+		Mongodb:  mongoClient,
+		Redis:    redis.MustNewRedis(config.RedisConf),
 	}, nil
 }

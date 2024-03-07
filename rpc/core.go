@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/lazysheeeep/resourceManager/rpc/internal/config"
-	"github.com/lazysheeeep/resourceManager/rpc/internal/svc"
 	"github.com/zeromicro/go-zero/core/conf"
+	"resourceManager/rpc/internal/config"
+	"resourceManager/rpc/internal/svc"
 )
 
 var configFile = flag.String("f", "etc/core.yaml", "the config file")
