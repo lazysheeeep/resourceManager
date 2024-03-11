@@ -3,7 +3,10 @@ package user
 import (
 	"context"
 	"errors"
+	"gorm.io/gorm"
 	"resourceManager/rpc/dao"
+	"resourceManager/rpc/model"
+	"time"
 
 	"resourceManager/rpc/internal/svc"
 	"resourceManager/rpc/types/core"
@@ -41,6 +44,31 @@ func (l *DeleteUserLogic) DeleteUser(in *core.IdReq) (*core.BaseResp, error) {
 		err = errors.New("用户不存在")
 		l.Logger.Errorw(err.Error(), logx.Field("detail", user))
 		return nil, err
+	}
+
+	deletedUser := model.DeletedUser{
+		Model: gorm.Model{
+			ID:        user.ID,
+			CreatedAt: user.CreatedAt,
+			UpdatedAt: user.UpdatedAt,
+			DeletedAt: gorm.DeletedAt{time.Now(), true},
+		},
+		Username:       user.Username,
+		PasswordDigest: user.PasswordDigest,
+		LoginStatus:    0,
+		Avatar:         user.Avatar,
+		Email:          user.Email,
+		Phone:          user.Phone,
+		RoleId:         1,
+		UUID:           user.UUID,
+	}
+
+	deletedUserDao := dao.NewDeletedUserDao(l.svcCtx.DbClient)
+	err = deletedUserDao.Create(deletedUser)
+
+	if err != nil {
+		l.Logger.Errorw(err.Error(), logx.Field("detail", user))
+		return nil, errors.New("删除用户失败")
 	}
 
 	err = userDao.DeleteUser(user)

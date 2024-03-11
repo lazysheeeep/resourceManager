@@ -47,7 +47,7 @@ func (dao *UserDao) UpdateUser(username string, user model.User) error {
 }
 
 func (dao *UserDao) DeleteUser(user model.User) error {
-	return dao.Model(&model.User{}).Delete(&user).Error
+	return dao.Model(&model.User{}).Unscoped().Delete(&user).Error
 }
 
 func (dao *UserDao) GetUserList(page model.Page) (user []model.User, count int64, err error) {
