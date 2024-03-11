@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"gorm.io/plugin/dbresolver"
+	"resourceManager/rpc/model"
 	"time"
 )
 
@@ -73,7 +74,8 @@ func (DatabaseConf *DatabaseConf) NewDbClient(connRead, connWrite string) *gorm.
 }
 
 func migration(db *gorm.DB) {
-	err := db.Set("gorm:table_options", "charset=utf8mb4").AutoMigrate()
+	err := db.Set("gorm:table_options", "charset=utf8mb4").AutoMigrate(
+		&model.User{})
 
 	if err != nil {
 		fmt.Errorf("数据库迁移出错:%s", err)

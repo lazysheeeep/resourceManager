@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package core;
+
+option go_package = "./core";
+
+//base message
+message BaseResp {
+  string msg = 1;
+}
+
+message BaseUUIDResp {
+  string uuid = 1;
+  string msg = 2;
+}
+
+message IdReq {
+  uint64 id = 1;
+}
+
+service Core {
+
+}

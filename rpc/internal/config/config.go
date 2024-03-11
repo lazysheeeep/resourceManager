@@ -10,4 +10,5 @@ type Config struct {
 	DatabaseConf DatabaseConf
 	MongoDBConf  MongoDBConf
 	RedisConf    redis.RedisConf
+	QiniuConf    QiNiuConf
 }

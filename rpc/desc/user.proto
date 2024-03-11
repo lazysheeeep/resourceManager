@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+//User message
+
+message UserInfo {
+  optional string username = 1;
+  optional string password = 2;
+  optional uint64 login_status = 3;
+  optional string avatar = 4;
+  optional string email = 5;
+  optional string phone =6;
+}
+
+message UserListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+}
+
+message UserListResp {
+  uint64 total = 1;
+  repeated UserInfo data = 2;
+}
+
+message UsernameReq {
+  string username = 1;
+}
+
+message AvatarInfo {
+  uint64 user_id = 1;
+  string path = 2;
+}
+
+service Core {
+  //User management
+  //group: user
+  rpc createUser(UserInfo) returns (BaseUUIDResp);
+  //group: user
+  rpc updateUser(UserInfo) returns (BaseResp);
+  //group: user
+  rpc uploadAvatar(AvatarInfo) returns (BaseResp);
+  //group: user
+  rpc getUserList(UserListReq) returns (UserListResp);
+  //group: user
+  rpc getUserById(IdReq) returns (UserInfo);
+  //group: user
+  rpc getUserByUsername(UsernameReq) returns (UserInfo);
+  //group: user
+  rpc deleteUser(IdReq) returns (BaseResp);
+}

@@ -1,0 +1,99 @@
+import "../base.api"
+
+type (
+    // UserInfo
+    UserInfo {
+        // Username
+        Username  *string `json:"username,optional"`
+
+        // Password
+        Password  *string `json:"password,optional"`
+
+        // LoginStatus
+        LoginStatus  *uint64 `json:"loginStatus,optional"`
+
+        // Avatar
+        Avatar  *string `json:"avatar,optional"`
+
+        // Email
+        Email  *string `json:"email,optional"`
+
+        // Phone
+        Phone  *string `json:"phone,optional"`
+
+    }
+
+    // UserListReq
+    UserListReq {
+        // Page
+        Page  uint64 `json:"page"`
+
+        // PageSize
+        PageSize  uint64 `json:"pageSize"`
+
+    }
+
+    // UserListResp
+    UserListResp {
+        // Total
+        Total  uint64 `json:"total"`
+
+        // Data
+        Data  []UserInfo `json:"data"`
+
+    }
+
+    // UsernameReq
+    UsernameReq {
+        // Username
+        Username  string `json:"username"`
+
+    }
+
+    // AvatarInfo
+    AvatarInfo {
+        // UserId
+        UserId  uint64 `json:"userId"`
+
+        // Path
+        Path  string `json:"path"`
+
+    }
+
+)
+
+@server(
+    group: user
+    //这里应该还有jwt鉴权 注意！！！！！！！！！！！
+)
+
+service Core {
+    // createUser
+    @handler createUser
+    post /user/create_user (UserInfo) returns (BaseMsgResp)
+
+    // updateUser
+    @handler updateUser
+    post /user/update_user (UserInfo) returns (BaseMsgResp)
+
+    // uploadAvatar
+    @handler uploadAvatar
+    post /user/upload_avatar (AvatarInfo) returns (BaseMsgResp)
+
+    // getUserList
+    @handler getUserList
+    post /user/get_user_list (UserListReq) returns (UserListResp)
+
+    // getUserById
+    @handler getUserById
+    post /user/get_user_by_id (IdReq) returns (UserInfo)
+
+    // getUserByUsername
+    @handler getUserByUsername
+    post /user/get_user_by_username (UsernameReq) returns (UserInfo)
+
+    // deleteUser
+    @handler deleteUser
+    post /user/delete_user (IdReq) returns (BaseMsgResp)
+
+}

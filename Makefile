@@ -1,14 +1,14 @@
 # Custom configuration | 自定义配置
 # 项目名称
 SERVICE = core
-# 项目格式化之后的名称
-SERVICE = core
 # 项目名称全小写格式
 SERVICE_LOWER = core
 # 项目名称下划线格式
 SERVICE_SNAKE = core
 # 项目名称短杠格式
 SERVICE_DASH = core
+# 项目格式化后名称
+SERVICE_STYLE = core
 
 # git仓库当前版本号
 VERSION = $(shell git describe --tags --always)
@@ -75,9 +75,9 @@ gen-api: # 生成api代码
 # 这里goctl原生的功能受限了,import的文件需要再proto文件中使用option go_package = ...导入 请注意！
 # 鉴于在多个proto文件中添加option非常麻烦,所以使用了suyuan改版过的goctls工具更加方便的生成rpc代码
 .PHONY: gen-rpc
-gen-rpc: # 生成rpc代码
-	goctls rpc protoc -I=. -I=$(RPC_PROTO_IMPORT) ./rpc/$(SERVICE_STYLE).proto --style=$(PROJECT_STYLE) --go_out=./rpc/types --go-grpc_out=./rpc/types --zrpc_out=./rpc --styles=$(PROJECT_STYLE)
-	@echo "Generate PRC files successfully"
+gen-rpc: # Generate RPC files from proto | 生成 RPC 的代码
+	goctls rpc protoc ./rpc/$(SERVICE_STYLE).proto --style=$(PROJECT_STYLE) --go_out=./rpc/types --go-grpc_out=./rpc/types --zrpc_out=./rpc --style=$(PROJECT_STYLE)
+	@echo "Generate RPC files successfully"
 
 # 模板：分页相关模板 设置可选字段模板
 .PHONY: gen-ent

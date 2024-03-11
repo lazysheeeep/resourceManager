@@ -1,0 +1,23 @@
+syntax = "v1"
+
+info(
+    title: "base api"
+    desc: "base api"
+    author: "lazysheeeeep"
+    email: "lazysheeeeep@gmail.com"
+    version: "v1.0"
+)
+
+//基础携带数据信息
+type BaseMsgResp {
+    //代码
+    Code int `json:"code"`
+
+    //提示信息
+    Message string `json:"message"`
+}
+
+type IdReq {
+    //id请求
+    Id uint64 `json:"id" validate:"number"`
+}
