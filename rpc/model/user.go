@@ -1,21 +1,21 @@
 package model
 
 import (
-	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
+	"time"
 )
 
 type User struct {
-	gorm.Model
-	Username       string `gorm:"unique;not null"`
-	PasswordDigest string `gorm:"not null"`
-	LoginStatus    int    `gorm:"default:1"` //0 禁用|1 正常
+	Id             string    `gorm:"primaryKey;unique;not null"`
+	CreatedAt      time.Time `gorm:"default:CURRENT_TIMESTAMP"`
+	UpdatedAt      time.Time `gorm:"default:CURRENT_TIMESTAMP"`
+	Username       string    `gorm:"unique;not null"`
+	PasswordDigest string    `gorm:"not null"`
+	LoginStatus    int       `gorm:"default:1"` //0 禁用|1 正常
 	Avatar         string
-	Email          string
-	Phone          string    `gorm:"type varchar(11)"`
-	RoleId         int       `gorm:"default:1"` //0 管理员|1 普通用户
-	UUID           uuid.UUID `gorm:"not null;unique"`
+	Email          string `gorm:"unique"`
+	Phone          string `gorm:"type varchar(11);unique"`
+	RoleId         int    `gorm:"default:1"` //0 管理员|1 普通用户
 }
 
 func (user *User) SetPassword(password string) error {

@@ -30,7 +30,7 @@ func (dao *UserDao) GetByUserName(name string) (user model.User, exist bool, err
 	return user, true, nil
 }
 
-func (dao *UserDao) GetByUserId(id uint64) (user model.User, exist bool, err error) {
+func (dao *UserDao) GetByUserId(id string) (user model.User, exist bool, err error) {
 	var number int64
 	err = dao.Model(&model.User{}).Where("id=?", id).Find(&user).Count(&number).Error
 	if err != nil {

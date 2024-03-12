@@ -19,5 +19,5 @@ type BaseMsgResp {
 
 type IdReq {
     //id请求
-    Id uint64 `json:"id" validate:"number"`
+    Id string `json:"id"`
 }

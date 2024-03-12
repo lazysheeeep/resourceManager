@@ -53,7 +53,7 @@ type (
     // AvatarInfo
     AvatarInfo {
         // UserId
-        UserId  uint64 `json:"userId"`
+        UserId  string `json:"userId"`
 
         // Path
         Path  string `json:"path"`

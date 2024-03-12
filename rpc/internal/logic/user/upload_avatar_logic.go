@@ -35,6 +35,8 @@ func (l *UploadAvatarLogic) UploadAvatar(in *core.AvatarInfo) (*core.BaseResp, e
 		return nil, err
 	}
 
+	defer file.Close()
+
 	url, err := qiniu.UploadToQiNi(l.svcCtx.Config.QiniuConf, file, fileSize)
 
 	if err != nil {

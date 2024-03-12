@@ -3,17 +3,8 @@ syntax = "proto3";
 package core;
 option go_package="./core";
 
-message UserListResp {
-  uint64 total = 1;
-  repeated UserInfo data = 2;
-}
-
-message UsernameReq {
-  string username = 1;
-}
-
 message AvatarInfo {
-  uint64 user_id = 1;
+  string user_id = 1;
   string path = 2;
 }
 
@@ -28,7 +19,7 @@ message BaseUUIDResp {
 }
 
 message IdReq {
-  uint64 id = 1;
+  string id = 1;
 }
 
 message UserInfo {
@@ -43,6 +34,15 @@ message UserInfo {
 message UserListReq {
   uint64 page = 1;
   uint64 page_size = 2;
+}
+
+message UserListResp {
+  uint64 total = 1;
+  repeated UserInfo data = 2;
+}
+
+message UsernameReq {
+  string username = 1;
 }
 
 service Core {

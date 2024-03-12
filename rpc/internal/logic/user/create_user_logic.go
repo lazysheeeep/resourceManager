@@ -33,10 +33,10 @@ func (l *CreateUserLogic) CreateUser(in *core.UserInfo) (*core.BaseUUIDResp, err
 	userDao := dao.NewUserDao(l.svcCtx.DbClient)
 
 	user := model.User{
+		Id:       uuid.New().String(),
 		Username: *in.Username,
 		Email:    *in.Email,
 		Phone:    *in.Phone,
-		UUID:     uuid.New(),
 	}
 	user.SetPassword(*in.Password)
 
@@ -48,7 +48,7 @@ func (l *CreateUserLogic) CreateUser(in *core.UserInfo) (*core.BaseUUIDResp, err
 	}
 
 	return &core.BaseUUIDResp{
-		Uuid: user.UUID.String(),
+		Uuid: user.Id,
 		Msg:  "用户创建成功",
 	}, nil
 }

@@ -3,13 +3,11 @@ package user
 import (
 	"context"
 	"errors"
-	"gorm.io/gorm"
 	"resourceManager/rpc/dao"
-	"resourceManager/rpc/model"
-	"time"
-
 	"resourceManager/rpc/internal/svc"
+	"resourceManager/rpc/model"
 	"resourceManager/rpc/types/core"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -47,12 +45,10 @@ func (l *DeleteUserLogic) DeleteUser(in *core.IdReq) (*core.BaseResp, error) {
 	}
 
 	deletedUser := model.DeletedUser{
-		Model: gorm.Model{
-			ID:        user.ID,
-			CreatedAt: user.CreatedAt,
-			UpdatedAt: user.UpdatedAt,
-			DeletedAt: gorm.DeletedAt{time.Now(), true},
-		},
+		Id:             user.Id,
+		CreatedAt:      user.CreatedAt,
+		UpdatedAt:      user.UpdatedAt,
+		DeletedAt:      time.Now(),
 		Username:       user.Username,
 		PasswordDigest: user.PasswordDigest,
 		LoginStatus:    0,
@@ -60,7 +56,6 @@ func (l *DeleteUserLogic) DeleteUser(in *core.IdReq) (*core.BaseResp, error) {
 		Email:          user.Email,
 		Phone:          user.Phone,
 		RoleId:         1,
-		UUID:           user.UUID,
 	}
 
 	deletedUserDao := dao.NewDeletedUserDao(l.svcCtx.DbClient)

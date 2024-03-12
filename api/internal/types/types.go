@@ -2,7 +2,7 @@
 package types
 
 type AvatarInfo struct {
-	UserId uint64 `json:"userId"`
+	UserId string `json:"userId"`
 	Path   string `json:"path"`
 }
 
@@ -12,7 +12,7 @@ type BaseMsgResp struct {
 }
 
 type IdReq struct {
-	Id uint64 `json:"id" validate:"number"`
+	Id string `json:"id"`
 }
 
 type UserInfo struct {

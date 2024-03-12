@@ -55,7 +55,7 @@ func UploadToQiNi(conf config.QiNiuConf, file multipart.File, fileSize int64) (u
 		return "", err
 	}
 
-	url = imgUrl + ret.Key
+	url = "http:/" + imgUrl + "/" + ret.Key
 
 	return url, nil
 
