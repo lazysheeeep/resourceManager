@@ -13,6 +13,7 @@ type Config struct {
 	CoreRpc      zrpc.RpcClientConf
 	McmsRpc      zrpc.RpcClientConf
 	DataBaseConf DatabaseConf
+	CasbinConf   CasbinConf
 	ProjectConf  ProjectConf
 	CROSConf     CROSConf
 }
