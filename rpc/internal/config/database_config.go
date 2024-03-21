@@ -83,3 +83,12 @@ func migration(db *gorm.DB) {
 	}
 	return
 }
+
+func FirstMigrate(db *gorm.DB) {
+	err := db.Set("gorm:table_options", "charset=utf8mb4").AutoMigrate(
+		&model.Flag{})
+	if err != nil {
+		fmt.Errorf("建表flag失败")
+	}
+	return
+}

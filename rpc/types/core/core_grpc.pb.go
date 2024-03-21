@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	Core_InitDatabase_FullMethodName      = "/core.Core/initDatabase"
 	Core_CreateUser_FullMethodName        = "/core.Core/createUser"
 	Core_UpdateUser_FullMethodName        = "/core.Core/updateUser"
 	Core_UploadAvatar_FullMethodName      = "/core.Core/uploadAvatar"
@@ -32,6 +33,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CoreClient interface {
+	// group: base
+	InitDatabase(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*BaseResp, error)
 	// User management
 	// group: user
 	CreateUser(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error)
@@ -55,6 +58,15 @@ type coreClient struct {
 
 func NewCoreClient(cc grpc.ClientConnInterface) CoreClient {
 	return &coreClient{cc}
+}
+
+func (c *coreClient) InitDatabase(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*BaseResp, error) {
+	out := new(BaseResp)
+	err := c.cc.Invoke(ctx, Core_InitDatabase_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *coreClient) CreateUser(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error) {
@@ -124,6 +136,8 @@ func (c *coreClient) DeleteUser(ctx context.Context, in *IdReq, opts ...grpc.Cal
 // All implementations must embed UnimplementedCoreServer
 // for forward compatibility
 type CoreServer interface {
+	// group: base
+	InitDatabase(context.Context, *Empty) (*BaseResp, error)
 	// User management
 	// group: user
 	CreateUser(context.Context, *UserInfo) (*BaseUUIDResp, error)
@@ -146,6 +160,9 @@ type CoreServer interface {
 type UnimplementedCoreServer struct {
 }
 
+func (UnimplementedCoreServer) InitDatabase(context.Context, *Empty) (*BaseResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InitDatabase not implemented")
+}
 func (UnimplementedCoreServer) CreateUser(context.Context, *UserInfo) (*BaseUUIDResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
@@ -178,6 +195,24 @@ type UnsafeCoreServer interface {
 
 func RegisterCoreServer(s grpc.ServiceRegistrar, srv CoreServer) {
 	s.RegisterService(&Core_ServiceDesc, srv)
+}
+
+func _Core_InitDatabase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CoreServer).InitDatabase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Core_InitDatabase_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CoreServer).InitDatabase(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Core_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -313,6 +348,10 @@ var Core_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "core.Core",
 	HandlerType: (*CoreServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "initDatabase",
+			Handler:    _Core_InitDatabase_Handler,
+		},
 		{
 			MethodName: "createUser",
 			Handler:    _Core_CreateUser_Handler,

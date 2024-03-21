@@ -21,3 +21,13 @@ type IdReq {
     //id请求
     Id string `json:"id"`
 }
+
+@server(
+    group: base
+)
+
+service Core {
+    // Initialize database
+    @handler initDatbase
+    post /core/init/database returns (BaseMsgResp)
+}

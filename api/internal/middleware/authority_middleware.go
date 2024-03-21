@@ -15,8 +15,9 @@ type AuthorityMiddleware struct {
 	Rds *redis.Redis
 }
 
-func NewAuthorityMiddleware(rds *redis.Redis) *AuthorityMiddleware {
+func NewAuthorityMiddleware(rds *redis.Redis, csb *casbin.Enforcer) *AuthorityMiddleware {
 	return &AuthorityMiddleware{
+		Csb: csb,
 		Rds: rds,
 	}
 }

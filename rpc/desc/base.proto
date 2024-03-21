@@ -4,6 +4,8 @@ package core;
 
 option go_package = "./core";
 
+message Empty {}
+
 //base message
 message BaseResp {
   string msg = 1;
@@ -19,5 +21,6 @@ message IdReq {
 }
 
 service Core {
-
+  //group: base
+  rpc initDatabase (Empty) returns (BaseResp);
 }

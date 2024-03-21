@@ -4,7 +4,7 @@ import (
 	"github.com/casbin/casbin/persist"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
-	gormadapter "github.com/casbin/gorm-adapter"
+	gormadapter "github.com/casbin/gorm-adapter/v2"
 	rediswatcher "github.com/casbin/redis-watcher/v2"
 	_ "github.com/go-sql-driver/mysql"
 	redis2 "github.com/redis/go-redis/v9"
@@ -18,7 +18,7 @@ type CasbinConf struct {
 }
 
 func (conf CasbinConf) NewCasbin(dpType, dsn string) (*casbin.Enforcer, error) {
-	adapter := gormadapter.NewAdapter(dpType, dsn, true)
+	adapter, err := gormadapter.NewAdapter(dpType, dsn, true)
 
 	var text string
 	if conf.ModelText == "" {

@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	base "resourceManager/api/internal/handler/base"
 	user "resourceManager/api/internal/handler/user"
 	"resourceManager/api/internal/svc"
 
@@ -11,6 +12,16 @@ import (
 )
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/core/init/database",
+				Handler: base.InitDatbaseHandler(serverCtx),
+			},
+		},
+	)
+
 	server.AddRoutes(
 		[]rest.Route{
 			{

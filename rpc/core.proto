@@ -3,16 +3,6 @@ syntax = "proto3";
 package core;
 option go_package="./core";
 
-message AvatarInfo {
-  string user_id = 1;
-  string path = 2;
-}
-
-// base message
-message BaseResp {
-  string msg = 1;
-}
-
 message BaseUUIDResp {
   string uuid = 1;
   string msg = 2;
@@ -20,15 +10,6 @@ message BaseUUIDResp {
 
 message IdReq {
   string id = 1;
-}
-
-message UserInfo {
-  optional string username = 1;
-  optional string password = 2;
-  optional uint64 login_status = 3;
-  optional string avatar = 4;
-  optional string email = 5;
-  optional string phone = 6;
 }
 
 message UserListReq {
@@ -45,7 +26,30 @@ message UsernameReq {
   string username = 1;
 }
 
+message Empty {}
+
+// base message
+message BaseResp {
+  string msg = 1;
+}
+
+message UserInfo {
+  optional string username = 1;
+  optional string password = 2;
+  optional uint64 login_status = 3;
+  optional string avatar = 4;
+  optional string email = 5;
+  optional string phone = 6;
+}
+
+message AvatarInfo {
+  string user_id = 1;
+  string path = 2;
+}
+
 service Core {
+  // group: base
+  rpc initDatabase(Empty) returns (BaseResp);
   // User management
   // group: user
   rpc createUser(UserInfo) returns (BaseUUIDResp);

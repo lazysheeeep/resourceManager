@@ -16,6 +16,7 @@ type (
 	AvatarInfo   = core.AvatarInfo
 	BaseResp     = core.BaseResp
 	BaseUUIDResp = core.BaseUUIDResp
+	Empty        = core.Empty
 	IdReq        = core.IdReq
 	UserInfo     = core.UserInfo
 	UserListReq  = core.UserListReq
@@ -23,6 +24,7 @@ type (
 	UsernameReq  = core.UsernameReq
 
 	Core interface {
+		InitDatabase(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*BaseResp, error)
 		// User management
 		CreateUser(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error)
 		UpdateUser(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*BaseResp, error)
@@ -42,6 +44,11 @@ func NewCore(cli zrpc.Client) Core {
 	return &defaultCore{
 		cli: cli,
 	}
+}
+
+func (m *defaultCore) InitDatabase(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*BaseResp, error) {
+	client := core.NewCoreClient(m.cli.Conn())
+	return client.InitDatabase(ctx, in, opts...)
 }
 
 // User management

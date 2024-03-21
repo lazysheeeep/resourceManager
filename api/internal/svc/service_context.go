@@ -6,6 +6,7 @@ import (
 	"github.com/zeromicro/go-zero/rest"
 	"github.com/zeromicro/go-zero/zrpc"
 	"resourceManager/api/internal/config"
+	"resourceManager/api/internal/middleware"
 	"resourceManager/rpc/coreclient"
 )
 
@@ -25,9 +26,10 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	cbn := c.CasbinConf.MustNewCasbinWithNewWatcher(c.DataBaseConf.Type, c.DataBaseConf.MysqlDSN(), c.RedisConf)
 
 	return &ServiceContext{
-		Config:  c,
-		CoreRpc: coreclient.NewCore(zrpc.MustNewClient(c.CoreRpc)),
-		Redis:   rds,
-		Casbin:  cbn,
+		Config:    c,
+		Authority: middleware.NewAuthorityMiddleware(rds, cbn).Handle,
+		CoreRpc:   coreclient.NewCore(zrpc.MustNewClient(c.CoreRpc)),
+		Redis:     rds,
+		Casbin:    cbn,
 	}
 }

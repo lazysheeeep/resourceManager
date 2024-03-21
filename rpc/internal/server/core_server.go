@@ -6,6 +6,7 @@ package server
 import (
 	"context"
 
+	"resourceManager/rpc/internal/logic/base"
 	"resourceManager/rpc/internal/logic/user"
 	"resourceManager/rpc/internal/svc"
 	"resourceManager/rpc/types/core"
@@ -20,6 +21,11 @@ func NewCoreServer(svcCtx *svc.ServiceContext) *CoreServer {
 	return &CoreServer{
 		svcCtx: svcCtx,
 	}
+}
+
+func (s *CoreServer) InitDatabase(ctx context.Context, in *core.Empty) (*core.BaseResp, error) {
+	l := base.NewInitDatabaseLogic(ctx, s.svcCtx)
+	return l.InitDatabase(in)
 }
 
 // User management
