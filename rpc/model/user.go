@@ -15,7 +15,7 @@ type User struct {
 	Avatar         string
 	Email          string `gorm:"unique"`
 	Phone          string `gorm:"type varchar(11);unique"`
-	RoleId         int    `gorm:"default:1"` //0 管理员|1 普通用户
+	RoleId         int    `gorm:"not null""` //0 管理员|1 普通用户
 }
 
 func (user *User) SetPassword(password string) error {

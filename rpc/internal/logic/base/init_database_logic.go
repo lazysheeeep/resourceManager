@@ -3,6 +3,7 @@ package base
 import (
 	"context"
 	"errors"
+	"github.com/google/uuid"
 	"github.com/zeromicro/go-zero/core/stores/redis"
 	"resourceManager/rpc/dao"
 	"resourceManager/rpc/model"
@@ -72,6 +73,7 @@ func (l *InitDatabaseLogic) InitDatabase(in *core.Empty) (*core.BaseResp, error)
 
 func (l *InitDatabaseLogic) insertAdminUser() error {
 	admin := model.User{
+		Id:          uuid.New().String(),
 		CreatedAt:   time.Now(),
 		UpdatedAt:   time.Now(),
 		Username:    "admin",
