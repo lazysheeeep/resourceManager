@@ -30,8 +30,10 @@ func (l *GetUserByIdLogic) GetUserById(in *core.IdReq) (*core.UserInfo, error) {
 	// todo: add your logic here and delete this line
 
 	userDao := dao.NewUserDao(l.svcCtx.DbClient)
-
 	user, exist, err := userDao.GetByUserId(in.GetId())
+
+	roleDao := dao.NewRoleDao(l.svcCtx.DbClient)
+	role, err := roleDao.GerRoleById(user.RoleId)
 
 	if err != nil {
 		l.Logger.Errorw(err.Error(), logx.Field("detail", user))
@@ -44,5 +46,5 @@ func (l *GetUserByIdLogic) GetUserById(in *core.IdReq) (*core.UserInfo, error) {
 		return nil, err
 	}
 
-	return assignment.AssignUser(user), nil
+	return assignment.AssignUser(user, role), nil
 }

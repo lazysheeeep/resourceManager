@@ -39,5 +39,6 @@ func (l *GetUserByIdLogic) GetUserById(req *types.IdReq) (resp *types.UserInfo, 
 		Avatar:      data.Avatar,
 		Email:       data.Email,
 		Phone:       data.Phone,
+		RoleName:    data.RoleName,
 	}, nil
 }

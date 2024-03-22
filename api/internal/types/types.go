@@ -22,6 +22,7 @@ type UserInfo struct {
 	Avatar      *string `json:"avatar,optional"`
 	Email       *string `json:"email,optional"`
 	Phone       *string `json:"phone,optional"`
+	RoleName    *string `json:"roleName,optional"`
 }
 
 type UserListReq struct {

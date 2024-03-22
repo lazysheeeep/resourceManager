@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/zeromicro/go-zero/core/stores/redis"
 	"resourceManager/rpc/dao"
+	"resourceManager/rpc/internal/config"
 	"resourceManager/rpc/model"
 	"time"
 
@@ -66,6 +67,16 @@ func (l *InitDatabaseLogic) InitDatabase(in *core.Empty) (*core.BaseResp, error)
 		return nil, errors.New("管理员帐号初始化出错")
 	}
 
+	//初始化角色
+	err = l.insertRole()
+	if err != nil {
+		logx.Errorw(err.Error(), logx.Field("detail:", err.Error()))
+		return nil, errors.New("用户角色初始化出错")
+	}
+
+	//数据库初始化完成
+	config.FirstMigrate(l.svcCtx.DbClient)
+
 	return &core.BaseResp{
 		Msg: "数据库初始化成功！",
 	}, nil
@@ -80,7 +91,7 @@ func (l *InitDatabaseLogic) insertAdminUser() error {
 		LoginStatus: 1,
 		Email:       "",
 		Phone:       "",
-		RoleId:      0,
+		RoleId:      1,
 	}
 	admin.SetPassword("123456")
 	userDao := dao.NewUserDao(l.svcCtx.DbClient)
@@ -88,5 +99,42 @@ func (l *InitDatabaseLogic) insertAdminUser() error {
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func (l *InitDatabaseLogic) insertRole() error {
+
+	roleDao := dao.NewRoleDao(l.svcCtx.DbClient)
+
+	admin := model.Role{
+		Name:   "admin",
+		Code:   "001",
+		Remark: "管理员",
+	}
+	err := roleDao.CreateRole(admin)
+	if err != nil {
+		return err
+	}
+
+	auditor := model.Role{
+		Name:   "auditor",
+		Code:   "002",
+		Remark: "审核员",
+	}
+	err = roleDao.CreateRole(auditor)
+	if err != nil {
+		return err
+	}
+
+	user := model.Role{
+		Name:   "user",
+		Code:   "003",
+		Remark: "普通用户",
+	}
+	err = roleDao.CreateRole(user)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

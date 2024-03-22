@@ -45,6 +45,7 @@ func (l *GetUserListLogic) GetUserList(req *types.UserListReq) (resp *types.User
 			Avatar:      v.Avatar,
 			Email:       v.Email,
 			Phone:       v.Phone,
+			RoleName:    v.RoleName,
 		}
 		users = append(users, user)
 	}

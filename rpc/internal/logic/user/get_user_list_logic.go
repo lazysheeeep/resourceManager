@@ -43,5 +43,12 @@ func (l *GetUserListLogic) GetUserList(in *core.UserListReq) (*core.UserListResp
 		return nil, err
 	}
 
-	return assignment.AssignListUser(users, uint64(total)), nil
+	var roles []model.Role
+	roleDao := dao.NewRoleDao(l.svcCtx.DbClient)
+	for _, v := range users {
+		role, _ := roleDao.GerRoleById(v.RoleId)
+		roles = append(roles, role)
+	}
+
+	return assignment.AssignListUser(users, roles, uint64(total)), nil
 }

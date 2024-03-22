@@ -5,7 +5,7 @@ import (
 	"resourceManager/rpc/types/core"
 )
 
-func AssignUser(user model.User) *core.UserInfo {
+func AssignUser(user model.User, role model.Role) *core.UserInfo {
 
 	loginStatus := uint64(user.LoginStatus)
 
@@ -15,14 +15,16 @@ func AssignUser(user model.User) *core.UserInfo {
 		Avatar:      &user.Avatar,
 		Email:       &user.Email,
 		Phone:       &user.Phone,
+		RoleCodes:   &role.Code,
+		RoleName:    &role.Name,
 	}
 }
 
-func AssignListUser(users []model.User, total uint64) *core.UserListResp {
+func AssignListUser(users []model.User, roles []model.Role, total uint64) *core.UserListResp {
 
 	var info []*core.UserInfo
 	for i, _ := range users {
-		user := AssignUser(users[i])
+		user := AssignUser(users[i], roles[i])
 		info = append(info, user)
 	}
 

@@ -21,6 +21,9 @@ type (
         // Phone
         Phone  *string `json:"phone,optional"`
 
+        // RoleName
+        RoleName *string `json:"roleName,optional"`
+        
     }
 
     // UserListReq

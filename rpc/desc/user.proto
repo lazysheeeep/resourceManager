@@ -9,6 +9,8 @@ message UserInfo {
   optional string avatar = 4;
   optional string email = 5;
   optional string phone =6;
+  optional string role_codes = 7;
+  optional string role_name = 8;
 }
 
 message UserListReq {
