@@ -77,7 +77,8 @@ func migration(db *gorm.DB) {
 	err := db.Set("gorm:table_options", "charset=utf8mb4").AutoMigrate(
 		&model.User{},
 		&model.DeletedUser{},
-		&model.Role{})
+		&model.Role{},
+		&model.Token{})
 
 	if err != nil {
 		fmt.Errorf("数据库迁移出错:%s", err)

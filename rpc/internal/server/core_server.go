@@ -7,6 +7,7 @@ import (
 	"context"
 
 	"resourceManager/rpc/internal/logic/base"
+	"resourceManager/rpc/internal/logic/token"
 	"resourceManager/rpc/internal/logic/user"
 	"resourceManager/rpc/internal/svc"
 	"resourceManager/rpc/types/core"
@@ -26,6 +27,27 @@ func NewCoreServer(svcCtx *svc.ServiceContext) *CoreServer {
 func (s *CoreServer) InitDatabase(ctx context.Context, in *core.Empty) (*core.BaseResp, error) {
 	l := base.NewInitDatabaseLogic(ctx, s.svcCtx)
 	return l.InitDatabase(in)
+}
+
+// token management
+func (s *CoreServer) CreateToken(ctx context.Context, in *core.TokenInfo) (*core.BaseUUIDResp, error) {
+	l := token.NewCreateTokenLogic(ctx, s.svcCtx)
+	return l.CreateToken(in)
+}
+
+func (s *CoreServer) DeleteToken(ctx context.Context, in *core.IdReq) (*core.BaseResp, error) {
+	l := token.NewDeleteTokenLogic(ctx, s.svcCtx)
+	return l.DeleteToken(in)
+}
+
+func (s *CoreServer) GetTokenList(ctx context.Context, in *core.TokenListReq) (*core.TokenListResp, error) {
+	l := token.NewGetTokenListLogic(ctx, s.svcCtx)
+	return l.GetTokenList(in)
+}
+
+func (s *CoreServer) GetTokenById(ctx context.Context, in *core.UUIDReq) (*core.TokenInfo, error) {
+	l := token.NewGetTokenByIdLogic(ctx, s.svcCtx)
+	return l.GetTokenById(in)
 }
 
 // User management

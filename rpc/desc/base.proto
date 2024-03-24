@@ -11,6 +11,10 @@ message BaseResp {
   string msg = 1;
 }
 
+message UUIDReq {
+  string uuid = 1;
+}
+
 message BaseUUIDResp {
   string uuid = 1;
   string msg = 2;

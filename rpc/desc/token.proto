@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+//token message
+
+message TokenInfo {
+  optional string id = 1;
+  optional int64 created_at = 2;
+  optional int64 updated_at = 3;
+  optional uint32 status = 4;
+  optional string uuid = 5;
+  optional string token = 6;
+  optional int64 expired_at = 7;
+}
+
+message TokenListResp {
+  uint64 total = 1;
+  repeated TokenInfo data = 2;
+}
+
+message TokenListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  optional string username = 3;
+  optional string uuid = 4;
+}
+
+service Core {
+  //token management
+  //group: token
+  rpc createToken (TokenInfo) returns (BaseUUIDResp);
+  //group: token
+  rpc deleteToken (IdReq) returns (BaseResp);
+  //group: token
+  rpc getTokenList (TokenListReq) returns (TokenListResp);
+  //group: token
+  rpc getTokenById (UUIDReq) returns (TokenInfo);
+}

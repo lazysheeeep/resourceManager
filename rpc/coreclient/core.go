@@ -13,18 +13,27 @@ import (
 )
 
 type (
-	AvatarInfo   = core.AvatarInfo
-	BaseResp     = core.BaseResp
-	BaseUUIDResp = core.BaseUUIDResp
-	Empty        = core.Empty
-	IdReq        = core.IdReq
-	UserInfo     = core.UserInfo
-	UserListReq  = core.UserListReq
-	UserListResp = core.UserListResp
-	UsernameReq  = core.UsernameReq
+	AvatarInfo    = core.AvatarInfo
+	BaseResp      = core.BaseResp
+	BaseUUIDResp  = core.BaseUUIDResp
+	Empty         = core.Empty
+	IdReq         = core.IdReq
+	TokenInfo     = core.TokenInfo
+	TokenListReq  = core.TokenListReq
+	TokenListResp = core.TokenListResp
+	UUIDReq       = core.UUIDReq
+	UserInfo      = core.UserInfo
+	UserListReq   = core.UserListReq
+	UserListResp  = core.UserListResp
+	UsernameReq   = core.UsernameReq
 
 	Core interface {
 		InitDatabase(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*BaseResp, error)
+		// token management
+		CreateToken(ctx context.Context, in *TokenInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error)
+		DeleteToken(ctx context.Context, in *IdReq, opts ...grpc.CallOption) (*BaseResp, error)
+		GetTokenList(ctx context.Context, in *TokenListReq, opts ...grpc.CallOption) (*TokenListResp, error)
+		GetTokenById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*TokenInfo, error)
 		// User management
 		CreateUser(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error)
 		UpdateUser(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*BaseResp, error)
@@ -49,6 +58,27 @@ func NewCore(cli zrpc.Client) Core {
 func (m *defaultCore) InitDatabase(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*BaseResp, error) {
 	client := core.NewCoreClient(m.cli.Conn())
 	return client.InitDatabase(ctx, in, opts...)
+}
+
+// token management
+func (m *defaultCore) CreateToken(ctx context.Context, in *TokenInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error) {
+	client := core.NewCoreClient(m.cli.Conn())
+	return client.CreateToken(ctx, in, opts...)
+}
+
+func (m *defaultCore) DeleteToken(ctx context.Context, in *IdReq, opts ...grpc.CallOption) (*BaseResp, error) {
+	client := core.NewCoreClient(m.cli.Conn())
+	return client.DeleteToken(ctx, in, opts...)
+}
+
+func (m *defaultCore) GetTokenList(ctx context.Context, in *TokenListReq, opts ...grpc.CallOption) (*TokenListResp, error) {
+	client := core.NewCoreClient(m.cli.Conn())
+	return client.GetTokenList(ctx, in, opts...)
+}
+
+func (m *defaultCore) GetTokenById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*TokenInfo, error) {
+	client := core.NewCoreClient(m.cli.Conn())
+	return client.GetTokenById(ctx, in, opts...)
 }
 
 // User management
