@@ -42,7 +42,7 @@ func (l *CreateTokenLogic) CreateToken(in *core.TokenInfo) (*core.BaseUUIDResp, 
 	err := tokenDao.CreateToken(token)
 	if err != nil {
 		logx.Errorw(err.Error(), logx.Field("detail:", err.Error()))
-		return nil, errors.New("创建token失败")
+		return nil, errors.New("创建token至mysql失败")
 	}
 
 	return &core.BaseUUIDResp{Uuid: *in.Uuid, Msg: "创建token成功"}, nil

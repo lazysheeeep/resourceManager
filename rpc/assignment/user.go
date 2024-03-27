@@ -10,7 +10,9 @@ func AssignUser(user model.User, role model.Role) *core.UserInfo {
 	loginStatus := uint64(user.LoginStatus)
 
 	return &core.UserInfo{
+		Id:          &user.Id,
 		Username:    &user.Username,
+		Password:    &user.PasswordDigest,
 		LoginStatus: &loginStatus,
 		Avatar:      &user.Avatar,
 		Email:       &user.Email,

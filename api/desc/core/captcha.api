@@ -1,0 +1,40 @@
+syntax = "v1"
+
+info(
+    title: "captcha api"
+    desc: "captcha api"
+    author: "lazysheeeeep"
+    email: "lazysheeeeep@gmail.com"
+    version: "v1.0"
+)
+
+import "../base.api"
+
+// 验证码信息
+type CaptchaInfo {
+    // 验证码id
+    CaptchaId string `json:"captchaId"`
+    // 验证码路径
+    ImgPath string `json:"imgPath"`
+}
+
+type CaptchaResp {
+    // code
+    Code int `json:"code"`
+
+    // msg
+    Msg string `json:"msg"`
+
+    // data
+    Data CaptchaInfo `json:"data"`
+}
+
+@server (
+    group: captcha
+)
+
+service Core {
+    // 获取验证码
+    @handler getCaptcha
+    get /captcha returns (CaptchaResp);
+}

@@ -2,6 +2,7 @@ package svc
 
 import (
 	"github.com/casbin/casbin/v2"
+	"github.com/mojocn/base64Captcha"
 	"github.com/zeromicro/go-zero/core/stores/redis"
 	"github.com/zeromicro/go-zero/rest"
 	"github.com/zeromicro/go-zero/zrpc"
@@ -15,8 +16,9 @@ type ServiceContext struct {
 	Authority rest.Middleware
 	CoreRpc   coreclient.Core
 	// McmsRpc mcmsclient.Mcms
-	Redis  *redis.Redis
-	Casbin *casbin.Enforcer
+	Redis   *redis.Redis
+	Casbin  *casbin.Enforcer
+	Captcha *base64Captcha.Captcha
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -31,5 +33,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		CoreRpc:   coreclient.NewCore(zrpc.MustNewClient(c.CoreRpc)),
 		Redis:     rds,
 		Casbin:    cbn,
+		Captcha:   config.MustNewRedisCaptcha(c.Captcha, rds),
 	}
 }

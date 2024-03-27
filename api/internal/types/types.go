@@ -6,13 +6,64 @@ type AvatarInfo struct {
 	Path   string `json:"path"`
 }
 
+type BaseDataInfo struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Data    string `json:"data,omitempty"`
+}
+
 type BaseMsgResp struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
 
+type CaptchaInfo struct {
+	CaptchaId string `json:"captchaId"`
+	ImgPath   string `json:"imgPath"`
+}
+
+type CaptchaResp struct {
+	Code int         `json:"code"`
+	Msg  string      `json:"msg"`
+	Data CaptchaInfo `json:"data"`
+}
+
 type IdReq struct {
 	Id string `json:"id"`
+}
+
+type LoginInfo struct {
+	Uuid   string `json:"uuid"`
+	Token  string `json:"token"`
+	Expire uint64 `json:"expire"`
+}
+
+type LoginReq struct {
+	Username  string `json:"username" validate:"required,alphanum,max=20"`
+	Password  string `json:"password" validate:"required,min=6,max=20"`
+	CaptchaId string `json:"captchaId" validate:"required"`
+	Captcha   string `json:"captcha" validate:"required,len=6"`
+}
+
+type LoginResp struct {
+	BaseDataInfo
+	Data LoginInfo `json:"data"`
+}
+
+type RegisterReq struct {
+	Username  string `json:"username" validate:"required,alphanum,max=20"`
+	Password  string `json:"password" validate:"required,max=20,min=6"`
+	CaptchaId string `json:"captchaId" validate:"required,len=20"`
+	Captcha   string `json:"captcha" validate:"required,len=6"`
+	Email     string `json:"email" validate:"required,email,max=100"`
+}
+
+type UserBaseIDInfo struct {
+	UUID     *string  `json:"userId"`
+	Username *string  `json:"username"`
+	Avatar   *string  `json:"avatar"`
+	HomePath *string  `json:"homePath"`
+	RoleName []string `json:"roleName"`
 }
 
 type UserInfo struct {

@@ -8,6 +8,18 @@ info(
     version: "v1.0"
 )
 
+//type BaseDataInfo {
+//    //错误代码
+//    Code int `json:"code"`
+//
+//    //提示信息
+//    Message string `json:"message"`
+//
+//    //数据
+//    Data string `json:"data,omitempty"`
+//}
+
+
 //基础携带数据信息
 type BaseMsgResp {
     //代码

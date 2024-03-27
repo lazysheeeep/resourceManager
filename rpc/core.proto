@@ -3,33 +3,30 @@ syntax = "proto3";
 package core;
 option go_package="./core";
 
-message IdReq {
-  string id = 1;
+message UserListResp {
+  uint64 total = 1;
+  repeated UserInfo data = 2;
+}
+
+message UUIDReq {
+  string uuid = 1;
 }
 
 message UserInfo {
-  optional string username = 1;
-  optional string password = 2;
-  optional uint64 login_status = 3;
-  optional string avatar = 4;
-  optional string email = 5;
-  optional string phone = 6;
-  optional string role_codes = 7;
-  optional string role_name = 8;
+  optional string id = 1;
+  optional string username = 2;
+  optional string password = 3;
+  optional uint64 login_status = 4;
+  optional string avatar = 5;
+  optional string email = 6;
+  optional string phone = 7;
+  optional string role_codes = 8;
+  optional string role_name = 9;
 }
 
-message Empty {}
-
-message BaseUUIDResp {
-  string uuid = 1;
-  string msg = 2;
-}
-
-message TokenListReq {
+message UserListReq {
   uint64 page = 1;
   uint64 page_size = 2;
-  optional string username = 3;
-  optional string uuid = 4;
 }
 
 message UsernameReq {
@@ -41,13 +38,32 @@ message BaseResp {
   string msg = 1;
 }
 
+message IdReq {
+  string id = 1;
+}
+
+message TokenListResp {
+  uint64 total = 1;
+  repeated TokenInfo data = 2;
+}
+
+message TokenListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  optional string username = 3;
+  optional string uuid = 4;
+}
+
 message AvatarInfo {
   string user_id = 1;
   string path = 2;
 }
 
-message UUIDReq {
+message Empty {}
+
+message BaseUUIDResp {
   string uuid = 1;
+  string msg = 2;
 }
 
 message TokenInfo {
@@ -58,21 +74,6 @@ message TokenInfo {
   optional string uuid = 5;
   optional string token = 6;
   optional int64 expired_at = 7;
-}
-
-message TokenListResp {
-  uint64 total = 1;
-  repeated TokenInfo data = 2;
-}
-
-message UserListReq {
-  uint64 page = 1;
-  uint64 page_size = 2;
-}
-
-message UserListResp {
-  uint64 total = 1;
-  repeated UserInfo data = 2;
 }
 
 service Core {

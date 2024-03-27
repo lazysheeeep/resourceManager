@@ -26,6 +26,23 @@ type (
         
     }
 
+    UserBaseIDInfo {
+        // Uuid
+        UUID *string `json:"userId"`
+    
+         // Username
+        Username *string `json:"username"`
+        
+        // Avatar
+        Avatar *string `json:"avatar"`
+    
+        // HomePath
+        HomePath *string `json:"homePath"`
+    
+        // RoleName
+        RoleName []string `json:"roleName"`
+    }
+    
     // UserListReq
     UserListReq {
         // Page
@@ -63,11 +80,88 @@ type (
 
     }
 
+    LoginInfo {
+        // Uuid
+        Uuid string `json:"uuid"`
+
+        // Token
+        Token string `json:"token"`
+
+        // Expire
+        Expire uint64 `json:"expire"`
+    }
+
+    // LoginReq
+    LoginReq {
+        // username
+        Username string `json:"username" validate:"required,alphanum,max=20"`
+
+        // password
+        Password string `json:"password" validate:"required,min=6,max=20"`
+
+        // captcha存在redis中
+        CaptchaId string `json:"captchaId" validate:"required"`
+
+        // captcha
+        Captcha string `json:"captcha" validate:"required,len=6"`
+    }
+
+
+    BaseDataInfo {
+        //错误代码
+        Code int `json:"code"`
+
+        //提示信息
+        Message string `json:"message"`
+
+        //数据
+        Data string `json:"data,omitempty"`
+    }
+
+    // LoginResp
+    LoginResp {
+        BaseDataInfo
+
+        //用户基本信息
+        Data LoginInfo `json:"data"`
+    }
+
+    RegisterReq {
+        // Username
+        Username string `json:"username" validate:"required,alphanum,max=20"`
+
+        // Password
+        Password string `json:"password" validate:"required,max=20,min=6"`
+
+        // CaptchaId
+        CaptchaId string `json:"captchaId" validate:"required,len=20"`
+
+        // Captcha
+        Captcha string `json:"captcha" validate:"required,len=6"`
+
+        // Email
+        Email string `json:"email" validate:"required,email,max=100"`
+    }
+
 )
 
+@server (
+    group: publicuser
+)
+
+service Core {
+    // Login
+    @handler login
+    post /user/login (LoginReq) returns (LoginResp)
+    // Register
+    @handler register
+    post /user/register (RegisterReq) returns (BaseMsgResp)
+}
+
 @server(
+    jwt: Auth
     group: user
-    //这里应该还有jwt鉴权 注意！！！！！！！！！！！
+    middleware: Authority
 )
 
 service Core {

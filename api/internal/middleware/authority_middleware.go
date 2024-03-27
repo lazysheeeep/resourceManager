@@ -53,6 +53,11 @@ func (m *AuthorityMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 				logx.Field("path", obj), logx.Field("method", act))
 			next(w, r)
 			return
+		} else {
+			logx.Errorw("the role is not permitted to access the API", logx.Field("roleId", roleId),
+				logx.Field("path", obj), logx.Field("method", act))
+			httpx.Error(w, errors.NewCodeError(7, "没有权限使用该接口"))
+			return
 		}
 
 	}

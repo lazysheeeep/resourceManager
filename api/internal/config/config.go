@@ -11,6 +11,7 @@ type Config struct {
 	Auth         AuthConf
 	RedisConf    redis.RedisConf
 	CoreRpc      zrpc.RpcClientConf
+	Captcha      CaptchaConf
 	McmsRpc      zrpc.RpcClientConf
 	DataBaseConf DatabaseConf
 	CasbinConf   CasbinConf

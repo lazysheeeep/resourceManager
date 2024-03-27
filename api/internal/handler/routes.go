@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	base "resourceManager/api/internal/handler/base"
+	captcha "resourceManager/api/internal/handler/captcha"
+	publicuser "resourceManager/api/internal/handler/publicuser"
 	user "resourceManager/api/internal/handler/user"
 	"resourceManager/api/internal/svc"
 
@@ -25,40 +27,69 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				Method:  http.MethodPost,
-				Path:    "/user/create_user",
-				Handler: user.CreateUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/delete_user",
-				Handler: user.DeleteUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/get_user_by_id",
-				Handler: user.GetUserByIdHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/get_user_by_username",
-				Handler: user.GetUserByUsernameHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/get_user_list",
-				Handler: user.GetUserListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/update_user",
-				Handler: user.UpdateUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/upload_avatar",
-				Handler: user.UploadAvatarHandler(serverCtx),
+				Method:  http.MethodGet,
+				Path:    "/captcha",
+				Handler: captcha.GetCaptchaHandler(serverCtx),
 			},
 		},
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/user/login",
+				Handler: publicuser.LoginHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/user/register",
+				Handler: publicuser.RegisterHandler(serverCtx),
+			},
+		},
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/create_user",
+					Handler: user.CreateUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/delete_user",
+					Handler: user.DeleteUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/get_user_by_id",
+					Handler: user.GetUserByIdHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/get_user_by_username",
+					Handler: user.GetUserByUsernameHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/get_user_list",
+					Handler: user.GetUserListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/update_user",
+					Handler: user.UpdateUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/upload_avatar",
+					Handler: user.UploadAvatarHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
 }

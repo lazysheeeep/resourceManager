@@ -36,7 +36,7 @@ func (l *CreateUserLogic) CreateUser(in *core.UserInfo) (*core.BaseUUIDResp, err
 		Id:       uuid.New().String(),
 		Username: *in.Username,
 		Email:    *in.Email,
-		Phone:    *in.Phone,
+		Phone:    "",
 		RoleId:   3,
 	}
 	user.SetPassword(*in.Password)
