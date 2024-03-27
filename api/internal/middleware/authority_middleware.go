@@ -39,8 +39,8 @@ func (m *AuthorityMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		if jwtResult == "1" {
-			logx.Errorf("token is blacklist", logx.Field("detail", r.Header.Get("Authorization")))
+		if jwtResult == "1" { //1 被拉入黑名单|0 正常使用
+			logx.Errorf("token in blacklist", logx.Field("detail", r.Header.Get("Authorization")))
 			httpx.Error(w, errors.NewApiErrorWithoutMsg(http.StatusUnauthorized))
 			return
 		}

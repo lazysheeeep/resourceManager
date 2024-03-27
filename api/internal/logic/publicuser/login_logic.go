@@ -60,6 +60,13 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 			return nil, err
 		}
 
+		// 将token写入redis
+		flag, err := l.svcCtx.Redis.SetnxEx("token_"+token, "0", int(l.svcCtx.Config.Auth.AccessExpire))
+		if !flag && err != nil {
+			logx.Errorw("存token至redis失败", logx.Field("detail:", err))
+			return nil, err
+		}
+
 		// 同时删除已经校验过的验证码
 		_, err = l.svcCtx.Redis.Del("CAPTCHA" + req.CaptchaId)
 		if err != nil {
